@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A small surprise 🌸</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffd6e0, #f8b4c4, #f3a6b1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      color: #5a2a3c;
+    }
+
+    /* INTRO CARD */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 42px;
+      border-radius: 26px;
+      box-shadow: 0 18px 45px rgba(214, 64, 108, 0.25);
+      animation: fadeIn 1.4s ease;
+      max-width: 320px;
+    }
+
+    /* BIRTHDAY CONTAINER */
+    .container {
+      display: none;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 42px;
+      border-radius: 28px;
+      max-width: 360px;
+      box-shadow: 0 20px 50px rgba(214, 64, 108, 0.35);
+      animation: softFade 1.6s ease;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #b23a5c;
+    }
+
+    .plate {
+      font-size: 17px;
+      line-height: 1.5;
+      min-height: 60px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 1.4s ease, transform 1.4s ease;
+      color: #6d2e46;
+    }
+
+    .plate.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .signature {
+      margin-top: 22px;
+      font-size: 14px;
+      opacity: 0.7;
+      color: #8b3a57;
+    }
+
+    button {
+      padding: 14px 32px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      background: #b23a5c;
+      color: white;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes softFade {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INTRO -->
+  <div id="intro" class="card">
+    <h2>Here’s something for you 🌸</h2>
+    <p>Open when you feel like it</p>
+    <button id="openBtn">Open</button>
+  </div>
+
+  <!-- BIRTHDAY -->
+  <div id="wish" class="container">
+    <img src="eyes.jpg" alt="Lotus eyes">
+    <h1>Happy Birthday Tasfi 🖤🌸</h1>
+    <div id="plate" class="plate"></div>
+    <div class="signature">— someone who noticed</div>
+  </div>
+
+  <!-- AUDIO (MP4) -->
+  <audio id="bgm" loop playsinline>
+    <source src="hmm.mp4" type="audio/mp4">
+  </audio>
+
+  <script>
+    const openBtn = document.getElementById("openBtn");
+    const intro = document.getElementById("intro");
+    const wish = document.getElementById("wish");
+    const audio = document.getElementById("bgm");
+    const plate = document.getElementById("plate");
+
+    const lines = [
+      "To the girl with lotus eyes — calm and expressive.",
+      "May your days be soft, kind, and unhurried.",
+      "May peace find you even on loud days.",
+      "May you always feel seen, never rushed.",
+      "Wishing you a year that feels gentle and true."
+    ];
+
+    let index = 0;
+    audio.volume = 0.25;
+
+    function showNextLine() {
+      plate.classList.remove("show");
+      setTimeout(() => {
+        plate.textContent = lines[index];
+        plate.classList.add("show");
+        index = (index + 1) % lines.length;
+      }, 600);
+    }
+
+    openBtn.addEventListener("click", () => {
+      // switch views
+      intro.style.display = "none";
+      wish.style.display = "block";
+
+      // start music (ALLOWED because same click)
+      audio.play();
+
+      // start text animation
+      showNextLine();
+      setInterval(showNextLine, 3000);
+    });
+  </script>
+
+</body>
+</html>
