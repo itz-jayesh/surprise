@@ -93,6 +93,15 @@
       from { opacity: 0; transform: scale(0.96); }
       to { opacity: 1; transform: scale(1); }
     }
+    /* FORCE VISIBILITY (mobile safety) */
+#intro {
+  display: block !important;
+}
+
+#wish {
+  display: none !important;
+}
+
   </style>
 </head>
 
@@ -118,7 +127,8 @@
     <source src="hmm.mp4" type="audio/mp4">
   </audio>
 
-  <script>
+ <script>
+  window.onload = function () {
     const openBtn = document.getElementById("openBtn");
     const intro = document.getElementById("intro");
     const wish = document.getElementById("wish");
@@ -145,20 +155,17 @@
       }, 600);
     }
 
-    openBtn.addEventListener("click", () => {
-      // switch views
+    openBtn.onclick = function () {
       intro.style.display = "none";
       wish.style.display = "block";
-
-      // start music (ALLOWED because same click)
       audio.play();
-
-      // start text animation
       showNextLine();
       setInterval(showNextLine, 3000);
-    });
-  </script>
+    };
+  };
+</script>
 
 </body>
 </html>
+
 
